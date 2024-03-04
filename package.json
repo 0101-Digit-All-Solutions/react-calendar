@@ -8,6 +8,8 @@
   "main": "dist/Calendar.js",
   "module": "dist/Calendar.js",
   "files": [ "dist", "README.md" ],
+  "author": "Sourav Dey/0101 Labs",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/0101-Digit-All-Solutions/react-calendar"
