@@ -4,7 +4,7 @@ import moment from "moment";
 import "./calendar.css";
 import { styles } from "./styles";
 
-import DropdownIcon from '../assets/icons/dropdown_icon.png';
+import DropdownIcon from './assets/icons/dropdown_icon.png';
 
 export const Calendar = (props) => {
   const weekdayshort = moment.weekdaysShort();

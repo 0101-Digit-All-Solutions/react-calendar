@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.styles = void 0;
-var _colors = require("../theme/colors");
+var _colors = require("./theme/colors");
 const styles = exports.styles = {
   headerContainer: {
     width: '100%',

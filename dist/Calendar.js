@@ -10,7 +10,7 @@ var _react = _interopRequireWildcard(require("react"));
 var _moment = _interopRequireDefault(require("moment"));
 require("./calendar.css");
 var _styles = require("./styles");
-var _dropdown_icon = _interopRequireDefault(require("../assets/icons/dropdown_icon.png"));
+var _dropdown_icon = _interopRequireDefault(require("./assets/icons/dropdown_icon.png"));
 const Calendar = props => {
   const weekdayshort = _moment.default.weekdaysShort();
   const [showCalendarTable, setShowCalendarTable] = (0, _react.useState)(true);
