@@ -20,7 +20,7 @@ Run the following command:
   | Prop        | Type           | default  | Required | Note  |
 | ------------|:--------------:| :-------:|:--------:|:-----:|
 | taskArray   | Array | Empty Array | Optional | The Array of tasks to display on calendar
-| onSelectDate| Function | NA | Optional | Called when a date is selected
+| onSelectDate| Function | NA | Required | Called when a date is selected
 | style   | Style Object | Default Style | Optional | Pass style object if you want to modify the style of root class
 | headerLabelText| String | Month Date, Year | Optional | Pass your own header label when required
 | headerLabelStyle   | Style Object | NA | Optional | Control your header label style

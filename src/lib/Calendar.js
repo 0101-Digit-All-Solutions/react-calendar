@@ -33,7 +33,7 @@ export const Calendar = ({
     newDtObj = moment(newDtObj).set("date", d);
     setDateObject(newDtObj)
     onSelectDate(newDtObj);
-  }, [dateObject, props]);
+  }, [dateObject]);
 
   useEffect(() => {
     let yearData = dateObject.format("Y");

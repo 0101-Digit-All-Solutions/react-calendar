@@ -38,7 +38,7 @@ const Calendar = _ref => {
     newDtObj = (0, _moment.default)(newDtObj).set("date", d);
     setDateObject(newDtObj);
     onSelectDate(newDtObj);
-  }, [dateObject, props]);
+  }, [dateObject]);
   (0, _react.useEffect)(() => {
     let yearData = dateObject.format("Y");
     let monthData = dateObject.format("MMMM");
