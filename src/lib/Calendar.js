@@ -23,7 +23,7 @@ export const Calendar = (props) => {
     let newDtObj = Object.assign({}, dateObject);
     newDtObj = moment(newDtObj).set("date", d);
     setDateObject(newDtObj)
-    props.onSelectDate(newDtObj);
+    props.onSelectDate && props.onSelectDate(newDtObj);
   }, [dateObject, props]);
 
   useEffect(() => {
@@ -70,7 +70,7 @@ export const Calendar = (props) => {
               }}
             >
               {d}
-              {hasTask.length > 0 && <p style={styles.dotStyle}>.</p>}
+              {hasTask && hasTask.length > 0 && <p style={styles.dotStyle}>.</p>}
             </span>
           </td>
         );
