@@ -2,7 +2,8 @@
   "name": "@0101-labs/react-calendar",
   "version": "0.1.0",
   "keywords": [
-    "javascript",
+    "react",
+    "calendar",
     "package"
   ],
   "main": "dist/Calendar.js",
