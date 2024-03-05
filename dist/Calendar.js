@@ -11,7 +11,17 @@ var _moment = _interopRequireDefault(require("moment"));
 require("./calendar.css");
 var _styles = require("./styles");
 var _dropdown_icon = _interopRequireDefault(require("./assets/icons/dropdown_icon.png"));
-const Calendar = props => {
+const Calendar = _ref => {
+  let {
+    taskArray = [],
+    onSelectDate = () => {},
+    style,
+    headerLabelText = '',
+    headerLabelStyle,
+    headerContainerStyle,
+    dropdownStyle,
+    dotStyle
+  } = _ref;
   const weekdayshort = _moment.default.weekdaysShort();
   const [showCalendarTable, setShowCalendarTable] = (0, _react.useState)(true);
   const [showMonthTable, setShowMonthTable] = (0, _react.useState)(false);
@@ -27,13 +37,18 @@ const Calendar = props => {
     let newDtObj = Object.assign({}, dateObject);
     newDtObj = (0, _moment.default)(newDtObj).set("date", d);
     setDateObject(newDtObj);
-    props.onSelectDate(newDtObj);
+    onSelectDate(newDtObj);
   }, [dateObject, props]);
   (0, _react.useEffect)(() => {
     let yearData = dateObject.format("Y");
     let monthData = dateObject.format("MMMM");
     let today = dateObject.date();
-    let navHeaderText = "".concat(monthData, " ").concat(today, ", ").concat(yearData);
+    let navHeaderText = '';
+    if (headerLabelText && headerLabelText.length > 0) {
+      navHeaderText = headerLabelText;
+    } else {
+      navHeaderText = "".concat(monthData, " ").concat(today, ", ").concat(yearData);
+    }
     setYearTitle(yearData);
     setMonthTitle(monthData);
     setHeaderLabel(navHeaderText);
@@ -52,13 +67,11 @@ const Calendar = props => {
   }, [dateObject]);
   (0, _react.useEffect)(() => {
     const tempDIM = [];
-    console.log(dateObject);
-    console.log(dateObject.month());
     const days_In_Month = dateObject.daysInMonth();
     const currentDay = dateObject.format("D");
     for (let d = 1; d <= days_In_Month; d++) {
       let current_Day = parseInt(d) === parseInt(currentDay) ? "today" : null;
-      let hasTask = props.taskArray && props.taskArray.filter(item => (0, _moment.default)(item.due_date).date() === d && (0, _moment.default)(item.due_date).month() === dateObject.month());
+      let hasTask = taskArray && taskArray.filter(item => (0, _moment.default)(item.due_date).date() === d && (0, _moment.default)(item.due_date).month() === dateObject.month());
       tempDIM.push( /*#__PURE__*/_react.default.createElement("td", {
         key: d,
         className: "calendar-day ".concat(current_Day)
@@ -66,8 +79,8 @@ const Calendar = props => {
         onClick: e => {
           onDayClick(e, d);
         }
-      }, d, hasTask.length > 0 && /*#__PURE__*/_react.default.createElement("p", {
-        style: _styles.styles.dotStyle
+      }, d, hasTask && hasTask.length > 0 && /*#__PURE__*/_react.default.createElement("p", {
+        style: dotStyle || _styles.styles.dotStyle
       }, "."))));
     }
     setDaysInMonth(tempDIM);
@@ -202,31 +215,32 @@ const Calendar = props => {
     return daysinmonth;
   };
   return /*#__PURE__*/_react.default.createElement("div", {
-    className: "labs-calendar"
+    className: "labs-calendar",
+    style: style
   }, /*#__PURE__*/_react.default.createElement("div", {
-    style: _styles.styles.headerContainer
+    style: headerContainerStyle || _styles.styles.headerContainer
   }, /*#__PURE__*/_react.default.createElement("div", {
     style: {
       width: '40%'
     }
   }, /*#__PURE__*/_react.default.createElement("p", {
-    style: _styles.styles.headerLabel
+    style: headerLabelStyle || _styles.styles.headerLabel
   }, headerLabel)), /*#__PURE__*/_react.default.createElement("div", {
     style: _styles.styles.dropdownContainerCenter
   }, /*#__PURE__*/_react.default.createElement("p", {
-    style: _styles.styles.headerLabel
+    style: headerLabelStyle || _styles.styles.headerLabel
   }, monthTitle), /*#__PURE__*/_react.default.createElement("img", {
     src: _dropdown_icon.default,
-    style: _styles.styles.dropdown,
+    style: dropdownStyle || _styles.styles.dropdown,
     alt: "month-dropdown",
     onClick: showMonth
   })), /*#__PURE__*/_react.default.createElement("div", {
     style: _styles.styles.dropdownContainerRight
   }, /*#__PURE__*/_react.default.createElement("p", {
-    style: _styles.styles.headerLabel
+    style: headerLabelStyle || _styles.styles.headerLabel
   }, yearTitle), /*#__PURE__*/_react.default.createElement("img", {
     src: _dropdown_icon.default,
-    style: _styles.styles.dropdown,
+    style: dropdownStyle || _styles.styles.dropdown,
     alt: "year-dropdown",
     onClick: showYearEditor
   }))), /*#__PURE__*/_react.default.createElement("div", {

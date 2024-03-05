@@ -6,7 +6,16 @@ import { styles } from "./styles";
 
 import DropdownIcon from './assets/icons/dropdown_icon.png';
 
-export const Calendar = (props) => {
+export const Calendar = ({
+  taskArray = [],
+  onSelectDate = () => {},
+  style,
+  headerLabelText = '',
+  headerLabelStyle,
+  headerContainerStyle,
+  dropdownStyle,
+  dotStyle,
+}) => {
   const weekdayshort = moment.weekdaysShort();
   const [showCalendarTable, setShowCalendarTable] = useState(true);
   const [showMonthTable, setShowMonthTable] = useState(false);
@@ -23,16 +32,19 @@ export const Calendar = (props) => {
     let newDtObj = Object.assign({}, dateObject);
     newDtObj = moment(newDtObj).set("date", d);
     setDateObject(newDtObj)
-    props.onSelectDate && props.onSelectDate(newDtObj);
+    onSelectDate(newDtObj);
   }, [dateObject, props]);
 
   useEffect(() => {
     let yearData = dateObject.format("Y");
     let monthData = dateObject.format("MMMM");
     let today = dateObject.date();
-
-    let navHeaderText = `${monthData} ${today}, ${yearData}`;
-
+    let navHeaderText = '';
+    if(headerLabelText && headerLabelText.length > 0) {
+      navHeaderText = headerLabelText;
+    } else {
+      navHeaderText = `${monthData} ${today}, ${yearData}`;
+    }
     setYearTitle(yearData);
     setMonthTitle(monthData);
     setHeaderLabel(navHeaderText);
@@ -55,13 +67,11 @@ export const Calendar = (props) => {
 
   useEffect(() => {
     const tempDIM = [];
-    console.log(dateObject);
-    console.log(dateObject.month());
     const days_In_Month = dateObject.daysInMonth();
     const currentDay = dateObject.format("D");
     for (let d = 1; d <= days_In_Month; d++) {
         let current_Day = parseInt(d) === parseInt(currentDay) ? "today" : null;
-        let hasTask = props.taskArray && props.taskArray.filter(item => moment(item.due_date).date() === d && moment(item.due_date).month() === dateObject.month());
+        let hasTask = taskArray && taskArray.filter(item => moment(item.due_date).date() === d && moment(item.due_date).month() === dateObject.month());
         tempDIM.push(
           <td key={d} className={`calendar-day ${current_Day}`}>
             <span
@@ -70,7 +80,7 @@ export const Calendar = (props) => {
               }}
             >
               {d}
-              {hasTask && hasTask.length > 0 && <p style={styles.dotStyle}>.</p>}
+              {hasTask && hasTask.length > 0 && <p style={dotStyle || styles.dotStyle}>.</p>}
             </span>
           </td>
         );
@@ -249,24 +259,20 @@ export const Calendar = (props) => {
     return daysinmonth;
   }
 
-
-   
-
   return (
-    <div className="labs-calendar">
-      <div style={styles.headerContainer}>
+    <div className="labs-calendar" style={style}>
+      <div style={headerContainerStyle || styles.headerContainer}>
         <div style={{width: '40%'}}>
-          <p style={styles.headerLabel}>{headerLabel}</p>
+          <p style={headerLabelStyle || styles.headerLabel}>{headerLabel}</p>
         </div>
         <div style={styles.dropdownContainerCenter}>
-          <p style={styles.headerLabel}>{monthTitle}</p>
-          <img src={DropdownIcon} style={styles.dropdown} alt="month-dropdown" onClick={showMonth}/>
+          <p style={headerLabelStyle || styles.headerLabel}>{monthTitle}</p>
+          <img src={DropdownIcon} style={dropdownStyle || styles.dropdown} alt="month-dropdown" onClick={showMonth}/>
         </div>
         <div style={styles.dropdownContainerRight}>
-          <p style={styles.headerLabel}>{yearTitle}</p>
-          <img src={DropdownIcon} style={styles.dropdown} alt="year-dropdown" onClick={showYearEditor}/>
+          <p style={headerLabelStyle || styles.headerLabel}>{yearTitle}</p>
+          <img src={DropdownIcon} style={dropdownStyle || styles.dropdown} alt="year-dropdown" onClick={showYearEditor}/>
         </div>
-        
       </div>
       <div className="calendar-date">
         {showYearNav && <YearTable props={yearTitle} />}
@@ -282,7 +288,6 @@ export const Calendar = (props) => {
               <tr>{weekdayshortname()}</tr>
             </thead>
             <tbody>{getDaysInMonth()}</tbody>
-            
           </table>
         </div>
       )}
