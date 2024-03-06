@@ -71,7 +71,7 @@ const Calendar = _ref => {
     const currentDay = dateObject.format("D");
     for (let d = 1; d <= days_In_Month; d++) {
       let current_Day = parseInt(d) === parseInt(currentDay) ? "today" : null;
-      let hasTask = taskArray && taskArray.filter(item => (0, _moment.default)(item.due_date).date() === d && (0, _moment.default)(item.due_date).month() === dateObject.month());
+      let hasTask = taskArray && taskArray.filter(item => (0, _moment.default)(item.due_date).date() === d && (0, _moment.default)(item.due_date).month() === dateObject.month() && (0, _moment.default)(item.due_date).year() === dateObject.year());
       tempDIM.push( /*#__PURE__*/_react.default.createElement("td", {
         key: d,
         className: "calendar-day ".concat(current_Day)
@@ -96,6 +96,7 @@ const Calendar = _ref => {
     setDateObject(date_Object);
     setShowMonthTable(!showMonthTable);
     setShowCalendarTable(!showCalendarTable);
+    onSelectDate(date_Object);
   }, [allmonths, dateObject, showCalendarTable, showMonthTable]);
   const MonthList = props => {
     let months = [];
@@ -139,6 +140,7 @@ const Calendar = _ref => {
     setDateObject(date_Object);
     setShowMonthTable(!showMonthTable);
     setShowYearNav(!showYearNav);
+    onSelectDate(date_Object);
   }, [dateObject, showMonthTable, showYearNav]);
   const getDates = (startDate, stopDate) => {
     var dateArray = [];

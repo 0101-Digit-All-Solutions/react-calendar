@@ -71,7 +71,7 @@ export const Calendar = ({
     const currentDay = dateObject.format("D");
     for (let d = 1; d <= days_In_Month; d++) {
         let current_Day = parseInt(d) === parseInt(currentDay) ? "today" : null;
-        let hasTask = taskArray && taskArray.filter(item => moment(item.due_date).date() === d && moment(item.due_date).month() === dateObject.month());
+        let hasTask = taskArray && taskArray.filter(item => moment(item.due_date).date() === d && moment(item.due_date).month() === dateObject.month() && moment(item.due_date).year() === dateObject.year());
         tempDIM.push(
           <td key={d} className={`calendar-day ${current_Day}`}>
             <span
@@ -101,6 +101,7 @@ export const Calendar = ({
     setDateObject(date_Object);
     setShowMonthTable(!showMonthTable);
     setShowCalendarTable(!showCalendarTable);
+    onSelectDate(date_Object);
   },[allmonths, dateObject, showCalendarTable, showMonthTable]);
 
     const MonthList = props => {
@@ -158,6 +159,7 @@ export const Calendar = ({
     setDateObject(date_Object);
     setShowMonthTable(!showMonthTable);
     setShowYearNav(!showYearNav);
+    onSelectDate(date_Object);
   },[dateObject, showMonthTable, showYearNav]);
 
   const getDates = (startDate, stopDate) => {
